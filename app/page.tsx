@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import Layout from '@/components/layout/Layout';
 import Hero from '@/components/sections/Hero';
+import Features from '@/components/sections/Features';
 
 export default function Home() {
   useEffect(() => {
@@ -32,6 +33,16 @@ export default function Home() {
   return (
     <Layout>
       <Hero />
+      <Features />
+      
+      {/* Placeholder for next sections */}
+      <section id="work" className="min-h-screen flex items-center justify-center">
+        <h2 className="text-4xl font-bold text-charcoal">Work Section</h2>
+      </section>
+
+      <section id="contact" className="min-h-screen flex items-center justify-center bg-gray-50">
+        <h2 className="text-4xl font-bold text-charcoal">Contact Section</h2>
+      </section>
     </Layout>
   );
 }
