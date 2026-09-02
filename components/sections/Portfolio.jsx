@@ -25,17 +25,11 @@ const Portfolio = () => {
       }
     };
 
-    // Add slight delay to ensure track is rendered
-    const timer = setTimeout(updateWidths, 100);
+    updateWidths();
     window.addEventListener('resize', updateWidths);
-    
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener('resize', updateWidths);
-    };
-  }, [trackWidth]);
+    return () => window.removeEventListener('resize', updateWidths);
+  }, []);
 
-  // Use percentage-based x movement - simpler and more reliable
   const x = useTransform(scrollYProgress, [0, 1], ['0%', '-70%']);
 
   const projects = [
@@ -47,8 +41,9 @@ const Portfolio = () => {
       image: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&h=600&fit=crop',
       tags: ['HTML', 'CSS', 'Bootstrap', 'PHP', 'MySQL'],
       year: '2024',
-      link: '/school-management',
       featured: true,
+      link: '/school-management',
+      internal: true,
     },
     {
       id: 2,
@@ -70,6 +65,7 @@ const Portfolio = () => {
       year: '2024',
       featured: false,
       link: 'https://b2b8expo.com',
+      internal: false,
     },
     {
       id: 4,
@@ -81,6 +77,7 @@ const Portfolio = () => {
       year: '2024',
       featured: false,
       link: 'https://inspireuplift.com',
+      internal: false,
     },
     {
       id: 5,
@@ -92,6 +89,7 @@ const Portfolio = () => {
       year: '2024',
       featured: false,
       link: 'https://activehelp.org.pk',
+      internal: false,
     },
     {
       id: 6,
@@ -177,11 +175,11 @@ const Portfolio = () => {
                   {project.link && (
                     <a 
                       href={project.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
+                      target={project.internal ? '_self' : '_blank'}
+                      rel={project.internal ? '' : 'noopener noreferrer'}
                       className="inline-flex items-center gap-1 text-amber-400 text-xs font-medium mt-3 hover:text-amber-300 transition-colors"
                     >
-                      Visit Website
+                      {project.internal ? 'Learn More' : 'Visit Website'}
                       <ArrowUpRight className="w-3 h-3" />
                     </a>
                   )}
@@ -194,7 +192,7 @@ const Portfolio = () => {
     );
   }
 
-  // Desktop Layout - Simple horizontal scroll with percentage
+  // Desktop Layout
   return (
     <section ref={sectionRef} id="work" className="relative h-[350vh] bg-navy-900 hidden md:block">
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
@@ -268,11 +266,11 @@ const Portfolio = () => {
                 {project.link && (
                   <a 
                     href={project.link} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
+                    target={project.internal ? '_self' : '_blank'}
+                    rel={project.internal ? '' : 'noopener noreferrer'}
                     className="inline-flex items-center gap-1 text-amber-400 text-sm font-medium mt-4 hover:text-amber-300 transition-colors"
                   >
-                    Visit Website
+                    {project.internal ? 'Learn More' : 'Visit Website'}
                     <ArrowUpRight className="w-4 h-4" />
                   </a>
                 )}
