@@ -25,12 +25,18 @@ const Portfolio = () => {
       }
     };
 
-    updateWidths();
+    // Add slight delay to ensure track is rendered
+    const timer = setTimeout(updateWidths, 100);
     window.addEventListener('resize', updateWidths);
-    return () => window.removeEventListener('resize', updateWidths);
-  }, []);
+    
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', updateWidths);
+    };
+  }, [trackWidth]);
 
-  const x = useTransform(scrollYProgress, [0, 1], [0, -(trackWidth - viewportWidth + 100)]);
+  // Use percentage-based x movement - simpler and more reliable
+  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-70%']);
 
   const projects = [
     {
@@ -41,6 +47,7 @@ const Portfolio = () => {
       image: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&h=600&fit=crop',
       tags: ['HTML', 'CSS', 'Bootstrap', 'PHP', 'MySQL'],
       year: '2024',
+      link: '/school-management',
       featured: true,
     },
     {
@@ -55,46 +62,70 @@ const Portfolio = () => {
     },
     {
       id: 3,
-      title: 'Nexora Commerce',
-      category: 'Web Development',
-      description: 'Modern e-commerce platform with AI-powered recommendations.',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop',
-      tags: ['Next.js', 'Stripe', 'Tailwind'],
+      title: 'B2B8Expo',
+      category: 'Business Website',
+      description: 'B2B exhibition and expo platform connecting businesses with global opportunities.',
+      image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&h=600&fit=crop',
+      tags: ['HTML', 'CSS', 'JavaScript', 'Bootstrap'],
       year: '2024',
       featured: false,
+      link: 'https://b2b8expo.com',
     },
     {
       id: 4,
-      title: 'SocialConnect',
-      category: 'Mobile App',
-      description: 'Social media app with real-time messaging and stories.',
-      image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&h=600&fit=crop',
-      tags: ['React Native', 'Firebase'],
+      title: 'InspireUplift',
+      category: 'E-commerce Website',
+      description: 'Inspirational e-commerce platform with curated products and seamless shopping experience.',
+      image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&h=600&fit=crop',
+      tags: ['HTML', 'CSS', 'JavaScript', 'Bootstrap'],
+      year: '2024',
+      featured: false,
+      link: 'https://inspireuplift.com',
+    },
+    {
+      id: 5,
+      title: 'Active Help',
+      category: 'NGO Website',
+      description: 'Non-profit organization website for Active Help with donation and volunteer management.',
+      image: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&h=600&fit=crop',
+      tags: ['HTML', 'CSS', 'JavaScript', 'Bootstrap'],
+      year: '2024',
+      featured: false,
+      link: 'https://activehelp.org.pk',
+    },
+    {
+      id: 6,
+      title: 'Creative Design Studio',
+      category: 'Graphic Design',
+      description: 'Complete graphic design portfolio showcasing branding, logos, and marketing materials.',
+      image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop',
+      tags: ['Photoshop', 'Illustrator', 'Figma'],
       year: '2024',
       featured: false,
     },
     {
-      id: 5,
-      title: 'AnalyticsPro',
-      category: 'SaaS',
-      description: 'Advanced analytics dashboard with predictive insights.',
+      id: 7,
+      title: 'Corporate Website',
+      category: 'Web Development',
+      description: 'Professional corporate website with modern design and responsive layout.',
       image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
-      tags: ['React', 'D3.js', 'AWS'],
-      year: '2023',
+      tags: ['HTML', 'CSS', 'JavaScript', 'Bootstrap'],
+      year: '2024',
       featured: false,
     },
     {
-      id: 6,
-      title: 'MarketBoost',
+      id: 8,
+      title: 'Digital Marketing Campaign',
       category: 'Digital Marketing',
-      description: 'Digital marketing campaign with viral growth strategy.',
+      description: 'Comprehensive digital marketing campaign with SEO, social media, and content strategy.',
       image: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=800&h=600&fit=crop',
-      tags: ['SEO', 'Content', 'PPC'],
-      year: '2023',
+      tags: ['SEO', 'Social Media', 'Content'],
+      year: '2024',
       featured: false,
     },
   ];
 
+  // Mobile Layout
   if (isMobile) {
     return (
       <section id="work" className="relative py-16 bg-navy-900">
@@ -143,6 +174,17 @@ const Portfolio = () => {
                       <span key={idx} className="text-[10px] text-cream/60 bg-cream/5 px-2 py-0.5 rounded-md border border-cream/10">{tag}</span>
                     ))}
                   </div>
+                  {project.link && (
+                    <a 
+                      href={project.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-amber-400 text-xs font-medium mt-3 hover:text-amber-300 transition-colors"
+                    >
+                      Visit Website
+                      <ArrowUpRight className="w-3 h-3" />
+                    </a>
+                  )}
                 </div>
               </motion.div>
             ))}
@@ -152,8 +194,9 @@ const Portfolio = () => {
     );
   }
 
+  // Desktop Layout - Simple horizontal scroll with percentage
   return (
-    <section ref={sectionRef} id="work" className="relative h-[300vh] bg-navy-900 hidden md:block">
+    <section ref={sectionRef} id="work" className="relative h-[350vh] bg-navy-900 hidden md:block">
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
         <div className="text-center mb-8 px-4">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 text-amber-400 text-sm font-medium mb-4 border border-amber-500/20">
@@ -166,21 +209,38 @@ const Portfolio = () => {
           </h2>
         </div>
 
-        <motion.div ref={trackRef} style={{ x }} className="flex gap-6 px-6 md:px-12 w-max">
-          <div className="flex-shrink-0 w-[280px] md:w-[350px] flex items-center justify-center">
+        <motion.div 
+          ref={trackRef} 
+          style={{ x }} 
+          className="flex gap-6 px-8 w-max"
+        >
+          {/* Intro Card */}
+          <div className="flex-shrink-0 w-[300px] flex items-center justify-center">
             <div className="text-center">
               <h3 className="text-2xl font-bold text-cream mb-3">Our Work</h3>
               <p className="text-cream/60">Scroll to explore</p>
-              <motion.div animate={{ x: [0, 15, 0] }} transition={{ duration: 1.5, repeat: Infinity }} className="mt-4 text-amber-400 flex justify-center">
+              <motion.div 
+                animate={{ x: [0, 15, 0] }} 
+                transition={{ duration: 1.5, repeat: Infinity }} 
+                className="mt-4 text-amber-400 flex justify-center"
+              >
                 <ArrowUpRight className="w-6 h-6" />
               </motion.div>
             </div>
           </div>
 
+          {/* Project Cards */}
           {projects.map((project) => (
-            <div key={project.id} className="group relative flex-shrink-0 w-[320px] md:w-[400px] bg-navy-800 rounded-3xl overflow-hidden border border-cream/10 cursor-pointer hover:border-amber-400/50 transition-colors">
-              <div className="relative h-56 md:h-64 overflow-hidden">
-                <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            <div 
+              key={project.id} 
+              className="group relative flex-shrink-0 w-[380px] bg-navy-800 rounded-3xl overflow-hidden border border-cream/10 cursor-pointer hover:border-amber-400/50 transition-colors"
+            >
+              <div className="relative h-60 overflow-hidden">
+                <img 
+                  src={project.image} 
+                  alt={project.title} 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/50 to-transparent" />
                 <div className="absolute top-4 left-4">
                   <span className="text-xs font-medium text-cream bg-navy-900/80 px-3 py-1 rounded-full">{project.category}</span>
@@ -205,14 +265,28 @@ const Portfolio = () => {
                     <span key={idx} className="text-xs text-cream/60 bg-cream/5 px-2 py-1 rounded-md border border-cream/10">{tag}</span>
                   ))}
                 </div>
+                {project.link && (
+                  <a 
+                    href={project.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-amber-400 text-sm font-medium mt-4 hover:text-amber-300 transition-colors"
+                  >
+                    Visit Website
+                    <ArrowUpRight className="w-4 h-4" />
+                  </a>
+                )}
               </div>
             </div>
           ))}
 
-          <div className="flex-shrink-0 w-[250px] md:w-[300px] flex items-center justify-center">
+          {/* End Card */}
+          <div className="flex-shrink-0 w-[250px] flex items-center justify-center">
             <div className="text-center">
               <h3 className="text-2xl font-bold text-cream mb-3">Want more?</h3>
-              <button className="px-6 py-2.5 rounded-full bg-amber-500 text-navy-900 text-sm font-semibold">View All</button>
+              <button className="px-6 py-2.5 rounded-full bg-amber-500 text-navy-900 text-sm font-semibold hover:bg-amber-400 transition-colors">
+                View All
+              </button>
             </div>
           </div>
         </motion.div>

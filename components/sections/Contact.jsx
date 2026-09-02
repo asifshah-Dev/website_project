@@ -1,13 +1,17 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const formRef = useRef();
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [formData, setFormData] = useState({ 
+    from_name: '', 
+    from_email: '', 
+    subject: '', 
+    message: '' 
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState('');
@@ -22,29 +26,40 @@ const Contact = () => {
     setError('');
 
     try {
-      const result = await emailjs.sendForm(
+      const templateParams = {
+        from_name: formData.from_name,
+        from_email: formData.from_email,
+        subject: formData.subject,
+        message: formData.message,
+      };
+
+      console.log('Sending with params:', templateParams);
+      
+      const result = await emailjs.send(
         'service_7o8qtej',
         'template_fx5vvpw',
-        formRef.current,
+        templateParams,
         'eabo17DIEo-J4PhZq'
       );
 
+      console.log('Email sent:', result);
+      
       if (result.status === 200) {
         setIsSubmitting(false);
         setIsSubmitted(true);
-        setFormData({ name: '', email: '', subject: '', message: '' });
+        setFormData({ from_name: '', from_email: '', subject: '', message: '' });
         setTimeout(() => setIsSubmitted(false), 5000);
       }
     } catch (err) {
       console.error('EmailJS Error:', err);
       setIsSubmitting(false);
-      setError('Failed to send message. Please try again or email us directly at info@deltatechbridge.com');
+      setError('Failed to send message. Please try again.');
       setTimeout(() => setError(''), 5000);
     }
   };
 
   const contactInfo = [
-    { icon: Mail, label: 'Email', value: 'info@deltatechbridge.com', color: 'from-blue-500 to-cyan-500' },
+    { icon: Mail, label: 'Email', value: 'khanasif8681953@gmail.com', color: 'from-blue-500 to-cyan-500' },
     { icon: Phone, label: 'Phone', value: '+1 (555) 123-4567', color: 'from-emerald-500 to-green-500' },
     { icon: MapPin, label: 'Location', value: '123 Tech Street, Digital City', color: 'from-amber-500 to-orange-500' },
   ];
@@ -78,7 +93,6 @@ const Contact = () => {
                 </div>
               ))}
 
-              {/* Office Hours */}
               <div className="bg-navy-800 rounded-2xl border border-cream/10 p-4 md:p-5">
                 <h3 className="text-sm font-bold text-cream mb-2">Office Hours</h3>
                 <p className="text-xs text-cream/60">Monday - Friday: 9:00 AM - 6:00 PM</p>
@@ -108,46 +122,54 @@ const Contact = () => {
                   <div>
                     <label className="block text-xs font-medium text-cream/70 mb-1.5">Your Name</label>
                     <input
-                      type="text" name="name" value={formData.name} onChange={handleChange} required
+                      type="text" 
+                      name="from_name" 
+                      value={formData.from_name} 
+                      onChange={handleChange} 
+                      required
                       className="w-full px-4 py-2.5 rounded-lg bg-navy-900 border border-cream/20 text-cream text-sm focus:outline-none focus:border-amber-500 transition-colors"
                     />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-cream/70 mb-1.5">Email Address</label>
                     <input
-                      type="email" name="email" value={formData.email} onChange={handleChange} required
+                      type="email" 
+                      name="from_email" 
+                      value={formData.from_email} 
+                      onChange={handleChange} 
+                      required
                       className="w-full px-4 py-2.5 rounded-lg bg-navy-900 border border-cream/20 text-cream text-sm focus:outline-none focus:border-amber-500 transition-colors"
                     />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-cream/70 mb-1.5">Subject</label>
                     <input
-                      type="text" name="subject" value={formData.subject} onChange={handleChange} required
+                      type="text" 
+                      name="subject" 
+                      value={formData.subject} 
+                      onChange={handleChange} 
+                      required
                       className="w-full px-4 py-2.5 rounded-lg bg-navy-900 border border-cream/20 text-cream text-sm focus:outline-none focus:border-amber-500 transition-colors"
                     />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-cream/70 mb-1.5">Message</label>
                     <textarea
-                      name="message" value={formData.message} onChange={handleChange} required rows="4"
+                      name="message" 
+                      value={formData.message} 
+                      onChange={handleChange} 
+                      required 
+                      rows="4"
                       className="w-full px-4 py-2.5 rounded-lg bg-navy-900 border border-cream/20 text-cream text-sm focus:outline-none focus:border-amber-500 transition-colors resize-none"
                     />
                   </div>
                   <button
-                    type="submit" disabled={isSubmitting}
+                    type="submit" 
+                    disabled={isSubmitting}
                     className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-amber-400 to-yellow-500 text-navy-900 font-semibold text-sm disabled:opacity-50 flex items-center justify-center gap-2 hover:from-amber-500 hover:to-yellow-600 transition-all"
                   >
-                    {isSubmitting ? (
-                      <>
-                        <span className="w-4 h-4 border-2 border-navy-900/30 border-t-navy-900 rounded-full animate-spin" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        Send Message
-                        <Send className="w-4 h-4" />
-                      </>
-                    )}
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                    <Send className="w-4 h-4" />
                   </button>
                 </form>
               )}
