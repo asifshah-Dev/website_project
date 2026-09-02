@@ -24,7 +24,7 @@ const SchoolManagement = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const WHATSAPP_NUMBER = '923298681953';
+  const WHATSAPP_NUMBER = '923134164082';
 
   useEffect(() => {
     const initSmoothScroll = async () => {

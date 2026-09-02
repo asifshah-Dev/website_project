@@ -33,17 +33,13 @@ const Contact = () => {
         message: formData.message,
       };
 
-      console.log('Sending with params:', templateParams);
-      
       const result = await emailjs.send(
-        'service_7o8qtej',
-        'template_fx5vvpw',
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
         templateParams,
-        'eabo17DIEo-J4PhZq'
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
       );
 
-      console.log('Email sent:', result);
-      
       if (result.status === 200) {
         setIsSubmitting(false);
         setIsSubmitted(true);
@@ -59,9 +55,9 @@ const Contact = () => {
   };
 
   const contactInfo = [
-    { icon: Mail, label: 'Email', value: 'khanasif8681953@gmail.com', color: 'from-blue-500 to-cyan-500' },
-    { icon: Phone, label: 'Phone', value: '+1 (555) 123-4567', color: 'from-emerald-500 to-green-500' },
-    { icon: MapPin, label: 'Location', value: '123 Tech Street, Digital City', color: 'from-amber-500 to-orange-500' },
+    { icon: Mail, label: 'Email', value: 'Info@deltatechbridge.com', color: 'from-blue-500 to-cyan-500' },
+    { icon: Phone, label: 'Phone', value: '+92313 4164082', color: 'from-emerald-500 to-green-500' },
+    { icon: MapPin, label: 'Location', value: 'Zamzam Mall Baghbanpura Lahore', color: 'from-amber-500 to-orange-500' },
   ];
 
   return (
@@ -95,8 +91,8 @@ const Contact = () => {
 
               <div className="bg-navy-800 rounded-2xl border border-cream/10 p-4 md:p-5">
                 <h3 className="text-sm font-bold text-cream mb-2">Office Hours</h3>
-                <p className="text-xs text-cream/60">Monday - Friday: 9:00 AM - 6:00 PM</p>
-                <p className="text-xs text-cream/60">Saturday: 10:00 AM - 2:00 PM</p>
+                <p className="text-xs text-cream/60">Monday - Saturday: 11:00 AM - 7:00 PM</p>
+                <p className="text-xs text-cream/60">Friday: 1 hour break 1-2PM</p>
                 <p className="text-xs text-cream/60">Sunday: Closed</p>
               </div>
             </div>

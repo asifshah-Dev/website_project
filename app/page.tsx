@@ -16,10 +16,10 @@ export default function Home() {
         duration: 1.5,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
-        smoothTouch: false,
+        
       });
 
-      window.lenis= lenis;
+      (window as any).lenis = lenis;
 
       function raf(time: number) {
         lenis.raf(time);
@@ -30,7 +30,7 @@ export default function Home() {
 
       return () => {
         lenis.destroy();
-        window.lenis = null;
+        (window as any).lenis = null;
       };
     };
 

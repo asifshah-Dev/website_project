@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import Loader from '@/components/ui/Loader'
 
 export const metadata: Metadata = {
   title: 'Delta Tech bridge',
@@ -13,7 +14,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Loader />
+        {children}
+      </body>
     </html>
   )
 }
