@@ -4,16 +4,22 @@ import { useEffect } from 'react';
 import Layout from '@/components/layout/Layout';
 import Hero from '@/components/sections/Hero';
 import Features from '@/components/sections/Features';
+import Portfolio from '@/components/sections/Portfolio';
+import Testimonials from '@/components/sections/Testimonials';
+import Contact from '@/components/sections/Contact';
 
 export default function Home() {
   useEffect(() => {
     const initSmoothScroll = async () => {
       const Lenis = (await import('lenis')).default;
       const lenis = new Lenis({
-        duration: 1.2,
+        duration: 1.5,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
+        smoothTouch: false,
       });
+
+      window.lenis= lenis;
 
       function raf(time: number) {
         lenis.raf(time);
@@ -24,6 +30,7 @@ export default function Home() {
 
       return () => {
         lenis.destroy();
+        window.lenis = null;
       };
     };
 
@@ -34,15 +41,9 @@ export default function Home() {
     <Layout>
       <Hero />
       <Features />
-      
-      {/* Placeholder for next sections */}
-      <section id="work" className="min-h-screen flex items-center justify-center">
-        <h2 className="text-4xl font-bold text-charcoal">Work Section</h2>
-      </section>
-
-      <section id="contact" className="min-h-screen flex items-center justify-center bg-gray-50">
-        <h2 className="text-4xl font-bold text-charcoal">Contact Section</h2>
-      </section>
+      <Portfolio />
+      <Testimonials />
+      <Contact />
     </Layout>
   );
 }

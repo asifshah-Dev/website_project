@@ -10,16 +10,12 @@ const MagneticButton = ({ children, strength = 30, className = '' }) => {
   const handleMouseMove = (e) => {
     const { clientX, clientY } = e;
     const { left, top, width, height } = buttonRef.current.getBoundingClientRect();
-    
     const x = (clientX - (left + width / 2)) / width;
     const y = (clientY - (top + height / 2)) / height;
-    
     setPosition({ x: x * strength, y: y * strength });
   };
 
-  const handleMouseLeave = () => {
-    setPosition({ x: 0, y: 0 });
-  };
+  const handleMouseLeave = () => setPosition({ x: 0, y: 0 });
 
   return (
     <motion.div

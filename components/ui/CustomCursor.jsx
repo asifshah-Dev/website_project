@@ -22,7 +22,6 @@ const CustomCursor = () => {
   const ringY = useSpring(cursorY, ringSpring);
 
   useEffect(() => {
-    // Check if device is desktop
     const checkDevice = () => {
       const isDesktopDevice = window.matchMedia('(pointer: fine)').matches && window.innerWidth > 768;
       setIsDesktop(isDesktopDevice);
@@ -41,38 +40,19 @@ const CustomCursor = () => {
 
     const handleMouseOver = (e) => {
       const target = e.target;
-      
-      if (
-        target.closest('a') ||
-        target.closest('button') ||
-        target.closest('[data-cursor="link"]')
-      ) {
+      if (target.closest('a') || target.closest('button')) {
         setIsHovering(true);
         setCursorText('');
-      } else if (target.closest('[data-cursor="view"]')) {
-        setIsHovering(true);
-        setCursorText('View');
       } else {
         setIsHovering(false);
         setCursorText('');
       }
     };
 
-    const handleMouseDown = () => {
-      setIsClicking(true);
-    };
-
-    const handleMouseUp = () => {
-      setIsClicking(false);
-    };
-
-    const handleMouseLeave = () => {
-      setIsVisible(false);
-    };
-
-    const handleMouseEnter = () => {
-      setIsVisible(true);
-    };
+    const handleMouseDown = () => setIsClicking(true);
+    const handleMouseUp = () => setIsClicking(false);
+    const handleMouseLeave = () => setIsVisible(false);
+    const handleMouseEnter = () => setIsVisible(true);
 
     window.addEventListener('mousemove', moveCursor, { passive: true });
     window.addEventListener('mouseover', handleMouseOver, { passive: true });
@@ -92,12 +72,10 @@ const CustomCursor = () => {
     };
   }, [cursorX, cursorY, isDesktop]);
 
-  // Don't render on mobile
   if (!isDesktop) return null;
 
   return (
     <>
-      {/* Main golden dot */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none rounded-full"
         style={{
@@ -110,18 +88,14 @@ const CustomCursor = () => {
           opacity: isVisible ? 1 : 0,
           translateX: '-50%',
           translateY: '-50%',
-          boxShadow: '0 0 10px rgba(245, 158, 11, 0.8), 0 0 20px rgba(245, 158, 11, 0.5)',
+          boxShadow: '0 0 10px rgba(245, 158, 11, 0.8)',
         }}
-        animate={{
-          scale: isClicking ? 0.6 : isHovering ? 0.5 : 1,
-          opacity: isVisible ? 1 : 0,
-        }}
+        animate={{ scale: isClicking ? 0.6 : isHovering ? 0.5 : 1 }}
         transition={{ duration: 0.15 }}
       />
 
-      {/* Outer ring */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none rounded-full flex items-center justify-center"
+        className="fixed top-0 left-0 pointer-events-none rounded-full"
         style={{
           x: ringX,
           y: ringY,
@@ -132,34 +106,13 @@ const CustomCursor = () => {
           opacity: isVisible ? 1 : 0,
           translateX: '-50%',
           translateY: '-50%',
-          boxShadow: '0 0 15px rgba(245, 158, 11, 0.4)',
         }}
         animate={{
-          scale: isClicking ? 0.7 : isHovering ? 1.6 : 1,
-          opacity: isVisible ? (isHovering ? 1 : 0.8) : 0,
-          backgroundColor: isHovering ? 'rgba(245, 158, 11, 0.15)' : 'rgba(245, 158, 11, 0)',
+          scale: isClicking ? 0.7 : isHovering ? 1.5 : 1,
+          opacity: isVisible ? (isHovering ? 0.8 : 0.6) : 0,
         }}
         transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-      >
-        {isHovering && !cursorText && (
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            className="w-1.5 h-1.5 rounded-full bg-amber-500"
-            style={{ boxShadow: '0 0 10px rgba(245, 158, 11, 0.8)' }}
-          />
-        )}
-
-        {cursorText && (
-          <motion.span
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-[10px] font-bold text-amber-600 uppercase tracking-wider"
-          >
-            {cursorText}
-          </motion.span>
-        )}
-      </motion.div>
+      />
     </>
   );
 };

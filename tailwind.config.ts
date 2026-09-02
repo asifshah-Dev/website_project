@@ -1,45 +1,39 @@
-// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       colors: {
-        background: '#F8FAFC',
-        surface: '#FFFFFF',
-        primary: {
-          DEFAULT: '#6366F1',
-          light: '#818CF8',
-          dark: '#4F46E5',
+        navy: {
+          50: '#f0f5fa',
+          800: '#1E293B',
+          900: '#0F172A',
+          950: '#0A0F1E',
         },
-        charcoal: '#0F172A',
+        background: '#0F172A',
+        surface: '#1E293B',
+        primary: {
+          DEFAULT: '#F59E0B',
+          light: '#FBBF24',
+          dark: '#D97706',
+        },
+        charcoal: '#F5F5DC',
+        cream: {
+          DEFAULT: '#F5F5DC',
+          light: '#FFFFF0',
+          dark: '#EDE8D0',
+        },
         slate: {
-          DEFAULT: '#475569',
-          light: '#64748B',
+          DEFAULT: '#D1D5DB',
+          light: '#9CA3AF',
         },
       },
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
-      },
-      animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'marquee': 'marquee 30s linear infinite',
-      },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
-        },
-        marquee: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
-        },
-      },
-      backdropBlur: {
-        xs: '2px',
       },
     },
   },

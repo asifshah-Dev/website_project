@@ -1,134 +1,116 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { Code, Palette, Smartphone, Cloud, Database, Shield, Zap, Users } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Code, Megaphone, Palette, Smartphone, Cloud, ArrowUpRight, Sparkles } from 'lucide-react';
 
 const Features = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
   const features = [
     {
       icon: Code,
       title: 'Web Development',
-      description: 'Custom web applications built with modern technologies for optimal performance.',
-      size: 'large',
-      color: 'from-blue-500 to-cyan-500',
+      description: 'Custom websites and web applications built with cutting-edge technologies.',
+      gradient: 'from-blue-600 to-cyan-500',
+      stat: '150+ Projects',
+      tag: 'Development',
+    },
+    {
+      icon: Megaphone,
+      title: 'Digital Marketing',
+      description: 'Data-driven marketing strategies that boost your online presence.',
+      gradient: 'from-orange-500 to-red-500',
+      stat: '300% ROI',
+      tag: 'Marketing',
     },
     {
       icon: Palette,
-      title: 'UI/UX Design',
-      description: 'Beautiful, intuitive interfaces that users love to interact with.',
-      size: 'small',
-      color: 'from-pink-500 to-rose-500',
+      title: 'Graphic Designing',
+      description: 'Stunning visual designs that capture your brand essence.',
+      gradient: 'from-pink-600 to-rose-500',
+      stat: '500+ Designs',
+      tag: 'Design',
     },
     {
       icon: Smartphone,
-      title: 'Mobile Apps',
-      description: 'Native and cross-platform mobile applications for iOS and Android.',
-      size: 'small',
-      color: 'from-purple-500 to-violet-500',
+      title: 'Mobile App Development',
+      description: 'Native and cross-platform mobile applications.',
+      gradient: 'from-purple-600 to-violet-500',
+      stat: '50+ Apps',
+      tag: 'Mobile',
     },
     {
       icon: Cloud,
-      title: 'Cloud Solutions',
-      description: 'Scalable cloud infrastructure and deployment strategies for growing businesses.',
-      size: 'medium',
-      color: 'from-amber-500 to-orange-500',
-    },
-    {
-      icon: Database,
-      title: 'Database Design',
-      description: 'Optimized database architecture for fast, reliable data management.',
-      size: 'medium',
-      color: 'from-emerald-500 to-green-500',
-    },
-    {
-      icon: Shield,
-      title: 'Security',
-      description: 'Enterprise-grade security measures to protect your data and users.',
-      size: 'small',
-      color: 'from-red-500 to-pink-500',
+      title: 'SaaS Software',
+      description: 'Scalable Software as a Service solutions for your business.',
+      gradient: 'from-emerald-600 to-green-500',
+      stat: '99.9% Uptime',
+      tag: 'SaaS',
     },
   ];
 
   return (
-    <section id="about" className="relative py-20 md:py-32 bg-gray-50">
-      <div className="container mx-auto px-4 md:px-6">
+    <section id="about" className="relative py-16 md:py-20 bg-navy-900 overflow-hidden">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
-          {/* Section Heading */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-12 md:mb-20"
-          >
-            <h2 className="text-3xl md:text-5xl font-bold text-charcoal mb-4">
-              What We{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600">
-                Do Best
-              </span>
-            </h2>
-            <p className="text-base md:text-lg text-slate max-w-2xl mx-auto">
-              We offer a comprehensive suite of services to help your business
-              succeed in the digital landscape.
-            </p>
-          </motion.div>
+          <div className="text-center mb-10 md:mb-14">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 text-amber-400 text-sm font-medium mb-4 border border-amber-500/20"
+            >
+              <Sparkles className="w-4 h-4" />
+              Our Services
+            </motion.div>
 
-          {/* Bento Grid */}
-          <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-cream"
+            >
+              Services That{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">
+                Transform
+              </span>
+            </motion.h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {features.map((feature, index) => {
               const Icon = feature.icon;
-              const isLarge = feature.size === 'large';
-              const isMedium = feature.size === 'medium';
-
               return (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ 
-                    scale: 1.03,
-                    rotate: index % 2 === 0 ? 1 : -1,
-                    transition: { duration: 0.3 }
-                  }}
-                  className={`${
-                    isLarge 
-                      ? 'lg:col-span-2 lg:row-span-2' 
-                      : isMedium 
-                        ? 'lg:col-span-1' 
-                        : 'lg:col-span-1'
-                  } bg-white rounded-2xl border border-gray-200 p-6 md:p-8 shadow-sm hover:shadow-xl transition-shadow cursor-pointer group`}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  viewport={{ once: true, margin: '-30px' }}
+                  whileHover={{ y: -5 }}
+                  className="group relative bg-navy-800 rounded-2xl border border-cream/10 p-5 md:p-6 cursor-pointer"
                 >
-                  <div className="flex flex-col h-full">
-                    {/* Icon */}
-                    <motion.div
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.5 }}
-                      className={`w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white mb-4 md:mb-6 shadow-lg`}
-                    >
-                      <Icon className="w-6 h-6 md:w-7 md:h-7" />
-                    </motion.div>
+                  <div className="absolute top-4 right-4">
+                    <span className="text-[10px] font-medium text-cream/60 bg-cream/5 px-2 py-0.5 rounded-full border border-cream/10">
+                      {feature.tag}
+                    </span>
+                  </div>
 
-                    {/* Title */}
-                    <h3 className="text-lg md:text-xl font-bold text-charcoal mb-2 md:mb-3 group-hover:text-amber-500 transition-colors">
-                      {feature.title}
-                    </h3>
+                  <div className={`w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center text-white mb-4`}>
+                    <Icon className="w-6 h-6 md:w-7 md:h-7" />
+                  </div>
 
-                    {/* Description */}
-                    <p className="text-sm md:text-base text-slate leading-relaxed">
-                      {feature.description}
-                    </p>
+                  <h3 className="text-base md:text-lg font-bold text-cream mb-2 group-hover:text-amber-400 transition-colors">
+                    {feature.title}
+                  </h3>
 
-                    {/* Hover Arrow */}
-                    <div className="mt-auto pt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <span className="text-amber-500 text-sm font-medium">
-                        Learn more →
-                      </span>
-                    </div>
+                  <p className="text-xs md:text-sm text-cream/70 leading-relaxed mb-4">
+                    {feature.description}
+                  </p>
+
+                  <div className="flex items-center justify-between pt-3 border-t border-cream/10">
+                    <span className="text-xs md:text-sm font-semibold text-cream">{feature.stat}</span>
+                    <ArrowUpRight className="w-4 h-4 text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                 </motion.div>
               );

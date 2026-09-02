@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,11 +11,10 @@
   }
   
   body {
-    @apply bg-background text-charcoal font-sans antialiased overflow-x-hidden;
+    @apply bg-navy-900 text-cream font-sans antialiased overflow-x-hidden;
   }
 
-  /* Hide default cursor only on devices with fine pointer */
-  @media (pointer: fine) {
+  @media (pointer: fine) and (min-width: 768px) {
     * {
       cursor: none !important;
     }
@@ -21,28 +23,23 @@
 
 @layer components {
   .glass-card {
-    @apply bg-white/70 backdrop-blur-xl border border-white/50 shadow-lg;
-  }
-  
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600;
+    @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg;
   }
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F3F4F6;
+  background: #0F172A;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #334155;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: #F59E0B;
 }

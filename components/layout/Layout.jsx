@@ -2,6 +2,7 @@
 
 import CustomCursor from '../ui/CustomCursor';
 import Navbar from './Navbar';
+import Footer from './Footer';
 
 const Layout = ({ children }) => {
   return (
@@ -9,6 +10,7 @@ const Layout = ({ children }) => {
       <CustomCursor />
       <Navbar />
       <main>{children}</main>
+      <Footer />
     </>
   );
 };

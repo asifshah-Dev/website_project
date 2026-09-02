@@ -1,28 +1,40 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { ArrowRight, Play, Code, Palette, PenTool, Smartphone, Globe, Layout, Database, Cloud, Cpu, Boxes, Layers, Wrench, Rocket } from 'lucide-react';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, Play, Code, Palette, PenTool, Smartphone, Globe, Layout, Database, Cloud, Cpu, Boxes, Layers, Wrench } from 'lucide-react';
 import MagneticButton from '../ui/MagneticButton';
+import { useSmoothScrollTo } from '@/hooks/useSmoothScrollTo';
 
 const Hero = () => {
+  const heroRef = useRef(null);
+  const { scrollToSection } = useSmoothScrollTo();
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+
+  const yContent = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+
   const floatingIcons = [
-    { icon: Code, size: 40, top: '10%', left: '5%', delay: 0, duration: 4, color: '#007ACC' },
-    { icon: Palette, size: 35, top: '20%', left: '80%', delay: 0.3, duration: 5, color: '#F24E1E' },
-    { icon: PenTool, size: 30, top: '65%', left: '10%', delay: 0.6, duration: 4, color: '#F59E0B' },
-    { icon: Layout, size: 35, top: '70%', left: '85%', delay: 0.2, duration: 5, color: '#31A8FF' },
-    { icon: Smartphone, size: 30, top: '35%', left: '3%', delay: 0.5, duration: 4, color: '#EC4899' },
-    { icon: Globe, size: 30, top: '45%', left: '90%', delay: 0.1, duration: 5, color: '#10B981' },
-    { icon: Boxes, size: 35, top: '5%', left: '40%', delay: 0.4, duration: 4, color: '#61DAFB' },
-    { icon: Layers, size: 30, top: '15%', left: '60%', delay: 0.7, duration: 5, color: '#000000' },
-    { icon: Database, size: 30, top: '55%', left: '25%', delay: 0.3, duration: 4, color: '#3178C6' },
-    { icon: Cloud, size: 35, top: '75%', left: '50%', delay: 0.5, duration: 5, color: '#06B6D4' },
-    { icon: Cpu, size: 30, top: '30%', left: '70%', delay: 0.8, duration: 4, color: '#8B5CF6' },
-    { icon: Wrench, size: 30, top: '80%', left: '20%', delay: 0.4, duration: 5, color: '#F05032' },
+    { icon: Code, size: 45, top: '10%', left: '5%', delay: 0, color: '#60A5FA' },
+    { icon: Palette, size: 40, top: '20%', left: '85%', delay: 0.3, color: '#F472B6' },
+    { icon: PenTool, size: 38, top: '65%', left: '8%', delay: 0.6, color: '#FBBF24' },
+    { icon: Layout, size: 42, top: '70%', left: '88%', delay: 0.2, color: '#22D3EE' },
+    { icon: Smartphone, size: 40, top: '35%', left: '3%', delay: 0.5, color: '#A78BFA' },
+    { icon: Globe, size: 38, top: '45%', left: '92%', delay: 0.1, color: '#34D399' },
+    { icon: Boxes, size: 45, top: '5%', left: '40%', delay: 0.4, color: '#F59E0B' },
+    { icon: Database, size: 35, top: '55%', left: '25%', delay: 0.3, color: '#2DD4BF' },
+    { icon: Cloud, size: 42, top: '78%', left: '55%', delay: 0.5, color: '#38BDF8' },
+    { icon: Cpu, size: 38, top: '30%', left: '70%', delay: 0.8, color: '#FBBF24' },
+    { icon: Layers, size: 35, top: '15%', left: '60%', delay: 0.7, color: '#818CF8' },
+    { icon: Wrench, size: 35, top: '82%', left: '20%', delay: 0.4, color: '#F87171' },
   ];
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-gray-50 via-white to-gray-50">
-      {/* Floating Icons Background */}
+    <section ref={heroRef} id="home" className="relative min-h-screen flex items-center overflow-hidden bg-navy-900">
+      {/* Floating Icons - Always visible with good opacity */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         {floatingIcons.map((item, index) => {
           const Icon = item.icon;
@@ -30,124 +42,109 @@ const Hero = () => {
             <motion.div
               key={index}
               className="absolute"
-              style={{
-                top: item.top,
-                left: item.left,
-                color: item.color,
-              }}
-              initial={{ opacity: 0, scale: 0 }}
+              style={{ top: item.top, left: item.left, color: item.color }}
+              initial={{ opacity: 0 }}
               animate={{ 
-                opacity: [0.4, 0.8, 0.4],
-                scale: [1, 1.15, 1],
+                opacity: [0.5, 0.9, 0.5],
                 y: [0, -25, 0],
                 rotate: [0, 15, -15, 0],
               }}
-              transition={{
-                duration: item.duration,
-                delay: item.delay,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
+              transition={{ duration: 5, delay: item.delay, repeat: Infinity, ease: 'easeInOut' }}
             >
-              <Icon size={item.size} />
+              <Icon size={item.size} strokeWidth={1.8} />
             </motion.div>
           );
         })}
       </div>
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-transparent z-[1]" />
+      {/* Light overlay - not too dark so icons are visible */}
+      <div className="absolute inset-0 bg-gradient-to-b from-navy-900/60 via-navy-900/30 to-navy-900/60 z-[1]" />
 
       {/* Content */}
-      <div className="container mx-auto px-4 md:px-6 relative z-20 py-16 md:py-20">
-        <div className="max-w-4xl mx-auto text-center">
+      <motion.div 
+        style={{ y: yContent, opacity }}
+        className="container mx-auto px-4 relative z-20 py-16"
+      >
+        <div className="max-w-3xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-amber-100/70 text-amber-600 text-xs md:text-sm font-medium mb-6 md:mb-8 border border-amber-200 backdrop-blur-sm"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 text-amber-400 text-xs md:text-sm font-medium mb-4 md:mb-6 border border-amber-500/20"
           >
             <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
             Welcome to Delta Tech bridge
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl md:text-5xl lg:text-7xl font-bold text-charcoal mb-4 md:mb-6 leading-tight px-2"
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="text-3xl md:text-5xl lg:text-6xl font-bold text-cream mb-4 leading-tight"
           >
             We Build{' '}
-            <motion.span
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600"
-            >
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">
               Digital Experiences
-            </motion.span>
+            </span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="text-base md:text-xl text-slate mb-8 md:mb-10 max-w-2xl mx-auto px-4"
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="text-sm md:text-lg text-cream/80 mb-6 md:mb-8 max-w-xl mx-auto"
           >
-            We're a creative technology company crafting innovative digital solutions
-            that help businesses thrive in the modern world.
+            We're a creative technology company crafting innovative digital solutions.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.9 }}
-            className="flex flex-col sm:flex-row justify-center gap-3 md:gap-4 px-4"
+            transition={{ duration: 0.6, delay: 0.7 }}
+            className="flex flex-col sm:flex-row justify-center gap-3"
           >
             <MagneticButton>
               <a 
-                href="#work" 
-                className="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-amber-400 to-yellow-500 text-white rounded-lg font-semibold flex items-center justify-center gap-2 hover:from-amber-500 hover:to-yellow-600 transition-all duration-300 shadow-lg shadow-amber-400/30 w-full sm:w-auto"
+                href="#work"
+                onClick={(e) => { e.preventDefault(); scrollToSection('#work'); }}
+                className="px-6 py-3 bg-gradient-to-r from-amber-400 to-yellow-500 text-navy-900 rounded-lg font-semibold flex items-center justify-center gap-2 text-sm md:text-base w-full sm:w-auto"
               >
                 View Our Work
-                <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
+                <ArrowRight className="w-4 h-4" />
               </a>
             </MagneticButton>
 
             <MagneticButton>
-              <button className="px-6 md:px-8 py-3 md:py-4 bg-white/80 backdrop-blur-sm rounded-lg font-semibold flex items-center justify-center gap-2 text-charcoal border border-gray-200 hover:border-amber-400 transition-colors w-full sm:w-auto">
-                <Play className="w-4 h-4 md:w-5 md:h-5" />
-                Watch Showreel
-              </button>
+              <a 
+                href="#contact"
+                onClick={(e) => { e.preventDefault(); scrollToSection('#contact'); }}
+                className="px-6 py-3 bg-cream/10 rounded-lg font-semibold flex items-center justify-center gap-2 text-cream border border-cream/20 text-sm md:text-base w-full sm:w-auto"
+              >
+                <Play className="w-4 h-4" />
+                Let's Talk
+              </a>
             </MagneticButton>
           </motion.div>
 
-          {/* Stats */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.1 }}
-            className="flex justify-center gap-6 md:gap-12 mt-10 md:mt-16 px-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+            className="flex justify-center gap-6 md:gap-10 mt-8 md:mt-12"
           >
             {[
               { value: '250+', label: 'Projects' },
               { value: '98%', label: 'Satisfaction' },
               { value: '15+', label: 'Years' },
             ].map((stat, index) => (
-              <motion.div
-                key={index}
-                whileHover={{ scale: 1.1 }}
-                className="cursor-pointer"
-              >
-                <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-charcoal to-slate">
-                  {stat.value}
-                </div>
-                <div className="text-xs md:text-sm text-slate mt-1">{stat.label}</div>
-              </motion.div>
+              <div key={index} className="text-center">
+                <div className="text-xl md:text-2xl font-bold text-cream">{stat.value}</div>
+                <div className="text-[10px] md:text-xs text-cream/60 mt-1">{stat.label}</div>
+              </div>
             ))}
           </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
