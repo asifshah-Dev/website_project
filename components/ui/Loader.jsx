@@ -12,10 +12,11 @@ const Loader = () => {
     if (hasVisited) {
       setIsLoading(false);
     } else {
+      // Increased to 30 seconds
       const timer = setTimeout(() => {
         setIsLoading(false);
         sessionStorage.setItem('hasVisited', 'true');
-      }, 15000);
+      }, 30000);
 
       return () => clearTimeout(timer);
     }
@@ -26,7 +27,7 @@ const Loader = () => {
       {isLoading && (
         <motion.div
           exit={{ y: '-100%' }}
-          transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
+          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
           className="fixed inset-0 z-[100] bg-navy-900 flex flex-col items-center justify-center"
         >
           {/* Logo Container */}
