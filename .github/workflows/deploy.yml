@@ -3,7 +3,7 @@ name: Deploy Next.js Static Site to Hostinger
 on:
   push:
     branches:
-      - main  # Change to 'master' if your primary git branch is master
+      - main  # Change to 'master' if your primary branch is master
 
 env:
   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
@@ -41,4 +41,4 @@ jobs:
         timeout: 60000
         local-dir: ./out/
         server-dir: ./public_html/test/
-        dangerous-clean-slate: false
+        dangerous-clean-slate: true  # 🔥 FIX: Wipes out old cache paths cleanly to stop 550 crash loops
