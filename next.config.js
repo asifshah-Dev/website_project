@@ -4,8 +4,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  output: 'export',       // Swapped from 'standalone' to optimize for static asset hosting
-  trailingSlash: true,    // Fixes 404 asset errors when users refresh internal sub-pages
+  output: 'export',       // 🌟 CRITICAL: Change 'standalone' to 'export' to create the 'out' folder
+  trailingSlash: true,    // 🌟 CRITICAL: Prevents 404 errors on your sub-pages
 };
 
 module.exports = nextConfig;

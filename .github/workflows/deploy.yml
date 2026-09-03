@@ -29,15 +29,17 @@ jobs:
     - name: Build static production files
       run: npm run build
 
-    - name: Sync files to Hostinger Subdomain
+        - name: Sync files to Hostinger Subdomain
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        port: 21                   # Forces connection on the standard Hostinger port
-        protocol: ftps             # Switches connection type to secure explicit TLS to bypass timeouts
-        security: loose            # Allows connection to complete if Hostinger certificates are self-signed
-        timeout: 60000             # Increases timeout buffer to 60 seconds for larger asset arrays
+        port: 21
+        protocol: ftps
+        security: loose
+        timeout: 60000
         local-dir: ./out/
-        server-dir: /public_html/test/
+        server-dir: ./public_html/test/  # 🌟 CRITICAL: Added the dot (.) before /public_html
+        dangerous-clean-html: false
+
