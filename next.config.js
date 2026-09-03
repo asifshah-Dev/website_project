@@ -4,7 +4,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // (Static export lines are now completely removed)
+  output: 'export',
+  trailingSlash: true,
 };
 
 module.exports = nextConfig;
