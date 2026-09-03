@@ -73,7 +73,7 @@ const Hero = () => {
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 text-amber-400 text-xs md:text-sm font-medium mb-4 md:mb-6 border border-amber-500/20"
           >
             <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
-            Welcome to Delta Tech bridge
+            Welcome to Testing Tech bridge
           </motion.div>
 
           <motion.h1

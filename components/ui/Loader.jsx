@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const PROD_LOAD_DURATION = 100000; // real loader time in production (5 min) — change as needed
+const PROD_LOAD_DURATION = 300000; // real loader time in production (5 min) — change as needed
 const DEV_LOAD_DURATION = 2500;    // fast dev duration for testing
 
 const Loader = () => {
@@ -110,7 +110,7 @@ const Loader = () => {
 
             {/* Logo */}
             <img
-              src="/"
+              src="/logo.jpeg"
               alt="Delta Tech bridge"
               className="relative w-[55%] h-[55%] object-contain"
               style={{ mixBlendMode: 'lighten' }}
