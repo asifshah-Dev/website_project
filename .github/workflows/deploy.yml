@@ -40,6 +40,6 @@ jobs:
         security: loose
         timeout: 60000
         local-dir: ./out/
-        server-dir: /domains/://deltatechbridge.com  # 🌟 FIXED: Removed :// and added the / at the end
+        server-dir: /domains/://deltatechbridge.com  # 🌟 FIXED: Removed '://' and added '/' at the end
         dangerous-clean-slate: true
 
