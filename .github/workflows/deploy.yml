@@ -3,7 +3,10 @@ name: Deploy Next.js Static Site to Hostinger
 on:
   push:
     branches:
-      - main  # ⚠️ Note: If your primary GitHub branch is named 'master', change 'main' to 'master'
+      - main  # Change to 'master' if your primary git branch is master
+
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true # Safely satisfies the runner's engine migration warning
 
 jobs:
   web-deploy:
@@ -32,6 +35,9 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
+        port: 21                   # Forces connection on the standard Hostinger port
+        protocol: ftps             # Switches connection type to secure explicit TLS to bypass timeouts
+        security: loose            # Allows connection to complete if Hostinger certificates are self-signed
+        timeout: 60000             # Increases timeout buffer to 60 seconds for larger asset arrays
         local-dir: ./out/
         server-dir: /public_html/test/
-        dangerous-clean-html: false # This prevents your custom .htaccess file from being deleted
