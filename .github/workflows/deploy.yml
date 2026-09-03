@@ -6,7 +6,7 @@ on:
       - main  # Change to 'master' if your primary git branch is master
 
 env:
-  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true # Safely satisfies the runner's engine migration warning
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
 
 jobs:
   web-deploy:
@@ -29,7 +29,7 @@ jobs:
     - name: Build static production files
       run: npm run build
 
-        - name: Sync files to Hostinger Subdomain
+    - name: Sync files to Hostinger Subdomain
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.FTP_SERVER }}
@@ -40,6 +40,5 @@ jobs:
         security: loose
         timeout: 60000
         local-dir: ./out/
-        server-dir: ./public_html/test/  # 🌟 CRITICAL: Added the dot (.) before /public_html
-        dangerous-clean-html: false
-
+        server-dir: ./public_html/test/
+        dangerous-clean-slate: false
