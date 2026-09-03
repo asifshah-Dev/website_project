@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const PROD_LOAD_DURATION = 300000; // real loader time in production (5 min) — change as needed
+const PROD_LOAD_DURATION = 2500; // real loader time in production (5 min) — change as needed
 const DEV_LOAD_DURATION = 2500;    // fast dev duration for testing
 
 const Loader = () => {
