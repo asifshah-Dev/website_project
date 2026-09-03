@@ -3,30 +3,38 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const PROD_LOAD_DURATION = 300000; // real loader time in production (5 min) — change as needed
-const DEV_LOAD_DURATION = 3000;    // fast dev duration for testing
+const MIN_DISPLAY_TIME = 800; // shortest time the loader stays visible, so it doesn't just flash on fast loads
 
 const Loader = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const isDev = process.env.NODE_ENV !== 'production';
-  const LOAD_DURATION = isDev ? DEV_LOAD_DURATION : PROD_LOAD_DURATION;
-
   useEffect(() => {
-    const hasVisited = !isDev && sessionStorage.getItem('hasVisited');
+    const hasVisited = sessionStorage.getItem('hasVisited');
 
     if (hasVisited) {
       setIsLoading(false);
       return;
     }
 
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      if (!isDev) sessionStorage.setItem('hasVisited', 'true');
-    }, LOAD_DURATION);
+    const startTime = Date.now();
 
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const finishLoading = () => {
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, MIN_DISPLAY_TIME - elapsed);
+
+      setTimeout(() => {
+        setIsLoading(false);
+        sessionStorage.setItem('hasVisited', 'true');
+      }, remaining);
+    };
+
+    if (document.readyState === 'complete') {
+      // page already finished loading before this component even mounted
+      finishLoading();
+    } else {
+      window.addEventListener('load', finishLoading);
+      return () => window.removeEventListener('load', finishLoading);
+    }
   }, []);
 
   return (
