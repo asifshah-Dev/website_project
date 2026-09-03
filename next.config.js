@@ -4,8 +4,12 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  output: 'export',       // 🌟 CRITICAL: Change 'standalone' to 'export' to create the 'out' folder
-  trailingSlash: true,    // 🌟 CRITICAL: Prevents 404 errors on your sub-pages
+  output: 'export',
+  trailingSlash: true,
+  
+  // 🌟 FIX: Forces Next.js to prepend your folder path to every JS, CSS, and media request
+  basePath: '/test',
+  assetPrefix: '/test/', 
 };
 
 module.exports = nextConfig;
