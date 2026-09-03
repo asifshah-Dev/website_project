@@ -4,12 +4,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  output: 'export',
-  trailingSlash: true,
-  
-  // 🌟 FIX: Forces Next.js to prepend your folder path to every JS, CSS, and media request
-  basePath: '/test',
-  assetPrefix: '/test/', 
+  // (Static export lines are now completely removed)
 };
 
 module.exports = nextConfig;
