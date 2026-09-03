@@ -3,7 +3,7 @@ name: Deploy Next.js Static Site to Hostinger
 on:
   push:
     branches:
-      - main  # Change to 'master' if your primary branch is master
+      - main  # Change to 'master' if your primary git branch is master
 
 env:
   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
